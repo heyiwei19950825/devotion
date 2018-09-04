@@ -1,0 +1,129 @@
+{extend name="base" /}
+{block name="css"}{/block}
+
+{block name="body"}
+<form class="layui-form layui-form-pane" action="{:url('admin/order/index')}">
+    <div class="layui-inline">
+        <label class="layui-form-label">博主ID</label>
+        <div class="layui-input-block">
+            <input name="order_no" placeholder="多个博主用英文逗号隔开" autocomplete="off" class="layui-input" type="text" value=""/>
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">自媒体</label>
+        <div class="layui-input-inline">
+            <select name="order_status" lay-verify="">
+                <option value="">请选择</option>
+                <option value="">微博</option>
+                <option value="">小红书</option>
+                <option value="">抖音</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-inline"><button class="layui-btn" lay-submit="">查询</button></div>
+
+</form>
+<table class="layui-hide" id="table-data" lay-filter="table-data"></table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="show">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <img src="" alt="">
+</script>
+{/block}
+
+{block name="js"}{/block}
+{block name="script"}
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#table-data'
+            ,url:'/index/Wei_bo/getListByUid'
+            ,toolbar: '#toolbarDemo'
+            ,totalRow: true
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title: 'ID', sort: true, width:120}
+                ,{field:'username', title: '用户名'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                ,{field:'created_at', title: '发表时间', sort: true}
+                ,{field:'url', title: '文章地址'}
+                ,{field:'text', title: '内容',width:'30%' }
+                ,{field:'pics', title: '图片', width:150}
+                ,{field:'reposts_count', title: '转发' ,align: 'center', width:120}
+                ,{field:'comments_count', title: '评论', align: 'center', width:120} //单元格内容水平居中
+                ,{field:'attitudes_count', title: '点赞', align: 'center', width:120} //单元格内容水平居中
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+            ]]
+        });
+
+        //头工具栏事件
+        table.on('toolbar(table-data)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(table-data)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            } else if( obj.event == 'show'){
+                show(obj.data.url);
+            }
+        });
+        function show( url ){
+            layer.open({
+                type: 2,
+                title: false,
+                closeBtn: 0, //不显示关闭按钮
+                shade: [0],
+                area: ['375px', '212px'],
+                offset: 'rb', //右下角弹出
+                time: 2000, //2秒后自动关闭
+                anim: 2,
+                content: [url, 'no'], //iframe的url，no代表不显示滚动条
+                end: function(){ //此处用于演示
+                    layer.open({
+                        type: 2,
+                        title: '很多时候，我们想最大化看，比如像这个页面。',
+                        shadeClose: true,
+                        shade: false,
+                        maxmin: true, //开启最大化最小化按钮
+                        area: ['375px', '812px'],
+                        content: url
+                    });
+                }
+            });
+        }
+
+    });
+</script>
+{/block}

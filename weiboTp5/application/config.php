@@ -15,10 +15,10 @@ return [
     // +----------------------------------------------------------------------
 
     // 应用调试模式
-    'app_debug'              => false,
+    'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => false,
-    // 应用模式状态
+    'app_trace'              => true,
+    // 应用模式状态Log::init
     'app_status'             => '',
     // 是否支持多模块
     'app_multi_module'       => true,
@@ -139,10 +139,22 @@ return [
     ],
 
     // 视图输出字符串内容替换
-    'view_replace_str'       => [],
+    'view_replace_str'      => [
+        '__UPLOAD__' => '/uploads',
+        '__STATIC__' => '/static',
+        '__IMAGES__' => '/static/images',
+        '__JS__'     => '/static/js',
+        '__CSS__'    => '/static/css',
+    ],
+
+    // 手机模板开启
+    'mobile_theme'          => false,
+
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
     'dispatch_error_tmpl'    => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+
+
 
     // +----------------------------------------------------------------------
     // | 异常及错误设置
@@ -168,7 +180,9 @@ return [
         // 日志保存目录
         'path'  => LOG_PATH,
         // 日志记录级别
-        'level' => [],
+        'level' => ['error','info'],
+        //最大保留个数
+        'max_files' => 10,
     ],
 
     // +----------------------------------------------------------------------
@@ -236,4 +250,32 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+
+    //扩展配置文件
+    'extra_config_list'       => [
+        'error',//错误码
+    ],
+
+    'error_code' =>[
+        '10010' => '参数错误',
+        '10011' => '',
+
+        '20010' => '',
+
+        '30010' => '',
+
+        '40010' => ''
+    ],
+
+
+
+    //微博配置
+    'weibo'                   =>[
+        'api_url'=>[
+            'container'=>[//用户主页接口
+                'url'=>'https://m.weibo.cn/api/container/getIndex',
+                'param' => ['id'=>true,'containerid'=>false,'page'=>false]
+            ],
+        ]
+    ]
 ];
