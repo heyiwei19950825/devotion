@@ -251,6 +251,9 @@ return [
         'list_rows' => 15,
     ],
 
+    // 开启自动写入时间戳字段2.
+    'auto_timestamp' => true,
+
     //扩展配置文件
     'extra_config_list'       => [
         'error',//错误码
