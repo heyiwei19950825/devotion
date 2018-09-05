@@ -3,8 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>数据统计后台</title>
+    <title>老王的工作台</title>
     <link rel="stylesheet" href="__STATIC__/common/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/admin/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/common/live2d/assets/waifu.css"/>
     {block name="css"}{/block}
 </head>
 <body class="layui-layout-body">
@@ -13,8 +15,8 @@
         <div class="layui-logo">数据统计后台</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">红人</a></li>
-            <li class="layui-nav-item"><a href="">数据</a></li>
+            <li class="layui-nav-item"><a href="/index/Celebrity/index">红人</a></li>
+            <li class="layui-nav-item"><a href="/">数据</a></li>
             <li class="layui-nav-item">
                 <a href="javascript:;">其它</a>
                 <dl class="layui-nav-child">
@@ -27,7 +29,7 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="http://a.hiphotos.baidu.com/zhidao/pic/item/21a4462309f79052782f28490ff3d7ca7bcbd591.jpg" class="layui-nav-img">
+                    <img src="__STATIC__/common/img/profile/1.jpg" class="layui-nav-img">
                     王英
                 </a>
                 <dl class="layui-nav-child">
@@ -38,11 +40,67 @@
             <li class="layui-nav-item"><a href="">退了</a></li>
         </ul>
     </div>
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            {block name="body"}
-            {/block}
+    <div class="layui-body" style="background: #fff">
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" style="padding: 0 30px;">
+            <!-- 内容主体区域 -->
+                {block name="body"}
+                {/block}
+        </div>
+        <div class="suspension">
+            <div class="suspension-box">
+                <a href="#" class="a a-calculate" style="color: #fff;line-height: 44px">计算器</a>
+                <!--<a href="#" class="a a-service "><i class="i"></i></a>-->
+                <!--<a href="javascript:;" class="a a-service-phone "><i class="i"></i></a>-->
+                <a href="javascript:;" class="a a-qrcode" style="color: #fff;line-height: 44px;text-align: center">首页</a>
+                <!--<a href="#" class="a a-cart"><i class="i"></i></a>-->
+                <a href="javascript:;" class="a a-top"><i class="i"></i></a>
+                <div class="d d-service">
+                    <i class="arrow"></i>
+                    <div class="inner-box">
+                        <div class="d-service-item clearfix">
+                            <a href="#" class="clearfix"><span class="circle"><i class="i-qq"></i></span><h3>咨询在线客服</h3></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="d d-service-phone">
+                    <i class="arrow"></i>
+                    <div class="inner-box">
+                        <div class="d-service-item clearfix">
+                            <span class="circle"><i class="i-tel"></i></span>
+                            <div class="text">
+                                <p>服务热线</p>
+                                <p class="red number">176-1022-6808</p>
+                            </div>
+                        </div>
+                        <div class="d-service-intro clearfix">
+                            <p>只为你一人</p>
+                            <p>愿付出所有</p>
+                            <p>只为你一笑</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d d-qrcode">
+                    <i class="arrow"></i>
+                    <div class="inner-box">
+                        <!--<div class="qrcode-img"><img src="__STATIC__/common/img/side_ewm.jpg" alt=""></div>-->
+                        <p>暂无</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--小人-->
+    <div class="waifu">
+        <div class="waifu-tips"></div>
+        <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+        <div class="waifu-tool">
+            <span class="fui-home"></span>
+            <span class="fui-chat"></span>
+            <span class="fui-eye"></span>
+            <span class="fui-user"></span>
+            <span class="fui-photo"></span>
+            <!--<span class="fui-info-circle"></span>-->
+            <span class="fui-cross"></span>
         </div>
     </div>
 
@@ -51,15 +109,32 @@
         © Ewei - 献给我的王
     </div>
 </div>
-<script src="__STATIC__/common/layui/layui.js"></script>
+
+<script src="__STATIC__/common/js/jquery-2.1.1.min.js"></script>
+<script src="__STATIC__/common/layui/layui.all.js"></script>
 <script src="__STATIC__/admin/js/admin.js"></script>
+
+<!--页面小人-->
+<script src="__STATIC__/common/live2d/assets/waifu-tips.js"></script>
+<script src="__STATIC__/common/live2d/assets/live2d.js"></script>
+<script type="text/javascript">initModel("/static/common/live2d/assets/")</script>
+
 {block name="js"}{/block}
 {block name="script"}{/block}
 <script>
-    //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
-    });
+    //计算器显示
+    $(document).on('click','.a-calculate',function(){
+        //显示计算器
+        layer.open({
+            type: 2,
+            title: '计算器',
+            shadeClose: true,
+            shade: false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['613px', '397px'],
+            content: '/index/tool/calculate'
+        });
+    })
 </script>
 </body>
 </html>

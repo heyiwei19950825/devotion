@@ -1,0 +1,37 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 贺宜伟【ewei】
+ * Date: 2018/9/5
+ * Time: 11:39
+ */
+
+namespace app\index\model;
+
+
+use think\Db;
+
+class Celebrity extends BaseModel
+{
+    protected $autoWriteTimestamp = true;
+    protected $createTime = 'create_time';
+    protected $updateTime = 'update_time';
+
+    //自定义初始化
+    protected function initialize()
+    {
+        parent::initialize();
+        //TODO:自定义的初始化
+    }
+
+    static function getList( $params = [],$field = '' ){
+        $row = self::all($params,[],true);
+
+        return $row;
+    }
+
+    static function saveData( $data = [] ){
+        $row = self::create($data);
+        return $row;
+    }
+}

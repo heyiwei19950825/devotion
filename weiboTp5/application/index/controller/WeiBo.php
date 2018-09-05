@@ -109,7 +109,7 @@ class WeiBo extends Controller
                     'username' => $data['data']['userInfo']['screen_name'],
                     'created_at' => $v['mblog']['created_at'],
                     'url' => $v['scheme'],
-                    'text' => $v['mblog']['text'],
+                    'text' => str_replace("<br",'',$v['mblog']['text']),
                     'pics' => $pics,
                     'reposts_count' => $v['mblog']['reposts_count'],
                     'comments_count' => $v['mblog']['comments_count'],
