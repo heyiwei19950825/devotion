@@ -51,4 +51,19 @@ class helper
         curl_close($ch);
         return $data;
     }
+
+    /**
+     * 数组去重
+    **/
+    static function arrayUnique($array){
+        $out = [];
+        
+        foreach ($array as $key => $value) {
+            if(!in_array($value,$out)){
+                $out[$key] = $value; 
+            }
+        }
+
+        return $out;
+    }
 }

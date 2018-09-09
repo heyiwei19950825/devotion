@@ -5,33 +5,29 @@
     <div class="layui-inline">
         <label class="layui-form-label">页数</label>
         <div class="layui-input-inline" style="width:80px;" >
-            <select name="order_status" lay-verify="" lay-filter="pageNumber">
+            <select name="page_number" id="page_number" lay-verify="" lay-filter="pageNumber">
                 <option value="1">1</option>
                 <option value="3">3</option>
                 <option value="5">5</option>
-                <option value="all">全部</option>
+                <option value="10">10</option>
             </select>
         </div>
     </div>
     <div class="layui-inline">
         <label class="layui-form-label">博主ID</label>
         <div class="layui-input-block">
-            <select name="order_status" lay-verify="" lay-filter="pageNumber">
-                <option value="1">1</option>
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option value="all">全部</option>
+            <select name="celebrity" id="celebrity" lay-verify="" lay-filter="celebrity">
             </select>
         </div>
     </div>
     <div class="layui-inline">
         <label class="layui-form-label">自媒体</label>
         <div class="layui-input-inline">
-            <select name="order_status" lay-verify="">
-                <option value="">请选择</option>
-                <option value="">微博</option>
-                <option value="">小红书</option>
-                <option value="">抖音</option>
+            <select name="media_type" id="media_type" lay-verify="" lay-filter="media">
+                <!-- <option value="">请选择</option> -->
+                <option value="微博" selected="">微博</option>
+                <!-- <option value="小红书">小红书</option> -->
+                <!-- <option value="抖音">抖音</option> -->
             </select>
         </div>
     </div>
@@ -50,8 +46,9 @@
     layui.use(['form', 'table'], function(){
         var table = layui.table;
         var form = layui.form;
+
         //初始化表格
-        initTable( {} );
+        // initTable( {} );
         function initTable(params){
             table.render({
                 elem: '#table-data'
@@ -133,26 +130,73 @@
 
         //监听抓取的页数
         form.on('select(pageNumber)', function(obj){
-            initTable({page:obj.value});
+            //红人：
+            var uid     = $('#celebrity').val()
+            //媒体：
+            var media   = $('#media_type').val();
+
+            initTable({
+                page:obj.value,
+                uid:uid,
+                media:media
+            });
+        });
+
+        //监听抓取的红人
+        form.on('select(celebrity)', function(obj){
+            //页码：
+            var page    = $('#page_number').val();
+            //媒体：
+            var media   = $('#media_type').val();
+
+            initTable({
+                uid:obj.value,
+                page:page,
+                media:media
+            });
+        });
+
+         //监听抓取的红人
+        form.on('select(media)', function(obj){
+            //页码：
+            var page    = $('#page_number').val();
+            //媒体：
+            var uid     = $('#celebrity').val();
+            
+            initTable({
+                media:obj.value,
+                page:page,
+                uid:uid
+            });
         });
 
         //弹窗显示
         function show( url ){
             layer.open({
                 type: 2,
-                title: '很多时候，我们想最大化看，比如像这个页面。',
+                title: '微博页面预览',
                 shadeClose: true,
                 shade: false,
                 maxmin: true, //开启最大化最小化按钮
-                area: ['375px', '812px'],
+                area: ['675px', '812px'],
                 content: url
             });
         }
 
         //获取博主列表
-        $.post('/index/Celebrity/index',{},function(){
-
-        })
+        $.post('/index/Celebrity/index',{
+            type:'index',
+            field:'id,user_name'
+        },function(obj){
+            if(obj.code == 0){
+                var html = '<option value="">请选择</option>';
+                layui.each(obj.data, function(i,v){
+                    html += '<option value="'+v.id+'">'+v.user_name+'</option>';
+                })
+                $('#celebrity').html(html);
+                form.render('select');
+            }
+        },'json')
     });
 </script>
 {/block}

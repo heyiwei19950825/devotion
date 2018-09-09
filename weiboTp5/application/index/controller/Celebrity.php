@@ -23,6 +23,22 @@ class Celebrity extends BaseController
             $params = $this->request->post();
 
             $row = CelebrityModel::getList($params);
+            if( $params['type'] == 'celebrityList' ){
+                //处理媒体数据
+                foreach ($row as $key => &$value) {
+                   if( !empty($value['value'])){
+                        $value['value'] = json_decode($value['value'],true);
+                        $media = '';
+                        foreach ($value['value'] as $kv => $vv) {
+                            $media .= $vv['name'].'【'.$vv['uid'].'】';
+                        }
+                        $value['value'] = $media;
+                   }
+                }
+            }
+            
+
+
             $data = [
                 'code' => 0,
                 'message' => '查询成功',
@@ -80,7 +96,6 @@ class Celebrity extends BaseController
                 return json($data);
             }
 
-            CelebrityModel::saveData($data);
         }
 
     }
@@ -91,7 +106,20 @@ class Celebrity extends BaseController
     }
 
     public function update(){
+        if($this->request->isPost()){
+            $params = $this->request->post();
+            $params['status'] = $params['status'] == 'true' ? 0:1;
+            $row = (new CelebrityModel())->allowField('true')->where(['id'=>$params['id']])->update($params);
 
+            if( $row ){
+                $data['url'] = Url::build('index/Celebrity/index');
+                return json($data);
+            }else{
+                $data['code'] = 1;
+                $data['message'] = '网络错误';
+                return json($data);
+            }
+        }
     }
 
     public function del(){

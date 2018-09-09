@@ -26,14 +26,23 @@ class Celebrity extends BaseModel
 
     static function getList( $params = [] ){
         $field = $page = $limit = $keyword = $type = '';
+        extract($params);
 
         $row = self::where([])->field($field)->select();
+        
 
         return $row;
     }
 
     static function saveData( $data = [] ){
         $row = self::create($data);
+        return $row;
+    }
+
+    static function getInfo($params=[],$field=''){
+        
+        $row = self::where($params)->field($field)->find();
+
         return $row;
     }
 }
