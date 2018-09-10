@@ -627,32 +627,32 @@ class MchMenu
                     ],
                 ],
             ],
-            [
-                'admin' => true,
-                'name' => '安装应用',
-                'route' => 'mch/plugin/index',
-                'icon' => 'icon-manage',
-                'sub' => [
-                    'mch/plugin/detail',
-                ],
-            ],
-            [
-                'admin'=>true,
-                'name' => '教程管理',
-                'icon' => 'icon-manage',
-                'route' => 'mch/handle/index',
-                'list'=>[
-                    [
-                        'name' => '操作教程',
-                        'route' => 'mch/handle/index',
-                    ],
-                    [
-                        'admin'=>true,
-                        'name' => '教程设置',
-                        'route' => 'mch/handle/setting',
-                    ],
-                ]
-            ],
+//            [
+//                'admin' => true,
+//                'name' => '安装应用',
+//                'route' => 'mch/plugin/index',
+//                'icon' => 'icon-manage',
+//                'sub' => [
+//                    'mch/plugin/detail',
+//                ],
+//            ],
+//            [
+//                'admin'=>true,
+//                'name' => '教程管理',
+//                'icon' => 'icon-manage',
+//                'route' => 'mch/handle/index',
+//                'list'=>[
+//                    [
+//                        'name' => '操作教程',
+//                        'route' => 'mch/handle/index',
+//                    ],
+//                    [
+//                        'admin'=>true,
+//                        'name' => '教程设置',
+//                        'route' => 'mch/handle/setting',
+//                    ],
+//                ]
+//            ],
 
 
         ];

@@ -177,20 +177,20 @@ class Controller extends \app\controllers\Controller
     public function checkAuth()
     {
         $cache_key = 'mch_check_auth';
-        if (\Yii::$app->cache->get($cache_key))
-            return;
-        $api = Cloud::$cloud_server_prefix . Cloud::$cloud_server_host . '/api/mall/check-auth';
-        $curl = Cloud::apiGet($api);
-        $res = json_decode($curl->response, true);
-        if ($res && isset($res['code'])) {
-            if ($res['code'] != 0 && time() > strtotime('2018-01-24 00:00:00')) {
-                $this->layout = false;
-                echo $this->renderFile($this->module->viewPath . '/auth-error.php');
-                \Yii::$app->end();
-            } else {
+//        if (\Yii::$app->cache->get($cache_key))
+//            return;
+//        $api = Cloud::$cloud_server_prefix . Cloud::$cloud_server_host . '/api/mall/check-auth';
+//        $curl = Cloud::apiGet($api);
+//        $res = json_decode($curl->response, true);
+//        if ($res && isset($res['code'])) {
+//            if ($res['code'] != 0 && time() > strtotime('2018-01-24 00:00:00')) {
+//                $this->layout = false;
+//                echo $this->renderFile($this->module->viewPath . '/auth-error.php');
+//                \Yii::$app->end();
+//            } else {
                 \Yii::$app->cache->set($cache_key, true, 600);
-            }
-        }
+//            }
+//        }
     }
 
 }
