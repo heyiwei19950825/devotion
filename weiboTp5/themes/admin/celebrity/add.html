@@ -1,0 +1,96 @@
+{extend name="base" /}
+{block name="body"}
+<ul class="layui-tab-title site-demo-title">
+    <a href="index"><li class="">红人</li></a>
+    <a href="add"><li class="layui-this">添加</li></a>
+</ul>
+<div class="layui-tab-content">
+    <div class="layui-col-xs10 layui-col-sm8 layui-col-md8">
+        <form class="layui-form form-container" action="{:url('index/Celebrity/save')}" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">红人名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" lay-verify="required" placeholder="请输入红人名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class=" media-block">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">媒体信息</label>
+                    <div class="layui-input-block">
+                        <div class="layui-input-inline">
+                            <select name="media[name][]"  lay-verify="required">
+                                <option value="">选择媒体</option>
+                                <option value="微博">微博</option>
+                                <option value="抖音">抖音</option>
+                                <option value="小红书">小红书</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline" >
+                            <input type="text" name="media[uid][]" class="layui-input"  lay-verify="required">
+                        </div>
+                        <div class="layui-input-inline  add-btn">
+                            <div class="layui-btn"><i class="layui-icon"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="status" value="0" title="开启" checked="">
+                    <input type="radio" name="status" value="1" title="禁用">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <div class="layui-input-block">
+                    <textarea placeholder="备注" class="layui-textarea" name="describe"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <button class="layui-btn" lay-submit lay-filter="*">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </form>
+    </div>
+    <div class="layui-col-xs1 layui-col-sm2 layui-col-md2">
+        &nbsp;
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    $(function(){
+        layui.use('form', function() {
+            var form = layui.form;
+            $(document).on('click', '.add-btn', function () {
+                mediaAdd();
+            })
+            //添加媒体
+            function mediaAdd() {
+                var html = '<div class="layui-form-item">' +
+                    '                <div class="layui-input-block">' +
+                    '                    <div class="layui-input-inline">' +
+                    '                        <select name="media[name][]"  lay-verify="required">' +
+                    '                            <option value="">选择媒体</option>' +
+                    '                            <option value="weibo">微博</option>' +
+                    '                            <option value="douyin">抖音</option>' +
+                    '                            <option value="xiaohongshu">小红书</option>' +
+                    '                        </select>' +
+                    '                    </div>' +
+                    '                    <div class="layui-input-inline">' +
+                    '                        <input type="text" name="media[uid][]" autocomplete="off" class="layui-input"  lay-verify="required">' +
+                    '                    </div>' +
+                    '                    <div class="layui-input-inline">' +
+                    '                         <div class="layui-btn layui-btn-danger del-btn"><i class="layui-icon"></i></div>' +
+                    '                    </div>' +
+                    '                </div>' +
+                    '            </div>'
+                $('.media-block').append(html);
+                form.render('select');
+            }
+        });
+    })
+</script>
+{/block}

@@ -1,0 +1,26 @@
+<html>
+
+
+<script src="__COMMON__/js/jquery-2.1.1.min.js"></script>
+<script>
+    $(function(){
+        $.ajax({
+            type: "get",
+            async: false,
+            url: "http://music.qq.com/musicbox/shop/v3/data/hit/hit_newsong.js",
+            dataType: "jsonp",
+            jsonp: "callback",
+            jsonpCallback: "JsonCallback",
+            scriptCharset: 'GBK',//设置编码，否则会乱码
+            success: function(data) {
+                console.log(JSON.stringify(data))
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    })
+
+
+</script>
+</html>

@@ -91,13 +91,15 @@ return [
     // 路由使用完整匹配
     'route_complete_match'   => false,
     // 路由配置文件（支持配置多个）
-    'route_config_file'      => ['route'],
+    'route_config_file'      => ['route','api_route','admin_route','home_route'],
+    //是否开启路由缓存
+    'route_check_cache'      => false,
     // 是否强制使用路由
     'url_route_must'         => false,
     // 域名部署
-    'url_domain_deploy'      => false,
+    'url_domain_deploy'      => true,
     // 域名根，如thinkphp.cn
-    'url_domain_root'        => '',
+    'url_domain_root'        => 'ewei.com',
     // 是否自动转换URL中的控制器和操作名
     'url_convert'            => true,
     // 默认的访问控制器层
@@ -145,6 +147,7 @@ return [
         '__IMAGES__' => '/static/images',
         '__JS__'     => '/static/js',
         '__CSS__'    => '/static/css',
+        '__COMMON__' => '/static/common',
     ],
 
     // 手机模板开启
@@ -180,7 +183,7 @@ return [
         // 日志保存目录
         'path'  => LOG_PATH,
         // 日志记录级别
-        'level' => ['error','info'],
+        'level' => ['error'],
         //最大保留个数
         'max_files' => 10,
     ],
@@ -199,7 +202,7 @@ return [
 
     'cache'                  => [
         // 驱动方式
-        'type'   => 'File',
+        'type'   => 'file',
         // 缓存保存目录
         'path'   => CACHE_PATH,
         // 缓存前缀
@@ -250,9 +253,6 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
-
-    // 开启自动写入时间戳字段2.
-    'auto_timestamp' => true,
 
     //扩展配置文件
     'extra_config_list'       => [

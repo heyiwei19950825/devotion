@@ -1,0 +1,83 @@
+{extend name="base" /}
+{block name="css"}{/block}
+{block name="body"}
+
+<ul class="layui-tab-title site-demo-title">
+    <li><a href="index">音乐</a></li>
+    <li  class="layui-this"><a href="add">抓取</a></li>
+</ul>
+
+<!--筛选-->
+<form class="layui-form" style="margin-top: 20px;">
+    <div class="layui-form-item" pane="" style="margin-bottom:5px;">
+        <label class="layui-form-label">来源</label>
+        <div class="layui-input-block">
+            <input type="checkbox" class="from" value="1" lay-skin="primary" title="QQ音乐" lay-filter="from" checked>
+            <input type="checkbox" class="from" value="2" lay-skin="primary" title="网易音乐" lay-filter="from">
+            <input type="checkbox" class="from" value="3" lay-skin="primary" title="酷我音乐" lay-filter="from">
+            <input type="checkbox" class="from" value="4" lay-skin="primary" title="街舞爱好者" lay-filter="from">
+            <input type="checkbox" class="from" value="5" lay-skin="primary" title="九酷音乐" lay-filter="from">
+        </div>
+    </div>
+    <div class="layui-form-item" pane="" style="margin-bottom:5px;">
+        <label class="layui-form-label">类型</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="like1[write]" lay-skin="primary" title="全部">
+        </div>
+    </div>
+    <div class="layui-form-item" pane="" style="margin-bottom:5px;">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="like1[write]" lay-skin="primary" title="写作">
+            <input type="checkbox" name="like1[read]" lay-skin="primary" title="阅读">
+            <input type="checkbox" name="like1[game]" lay-skin="primary" title="游戏">
+        </div>
+    </div>
+    <div class="layui-form-item" pane="" style="margin-bottom:5px;">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="capture">抓取</button>
+        </div>
+    </div>
+</form>
+<table class="layui-hide" id="table-data" lay-filter="table-data"></table>
+<script type="text/html" id="barDemo">
+    <div class="layui-btn layui-btn-xs" lay-event="show">查看</div>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <img src="" alt="">
+</script>
+{/block}
+{block name="js"}{/block}
+{block name="script"}
+<script>
+    layui.use(['form', 'table'], function(){
+        var form = layui.form;
+        var from = 1;
+
+        //来源选择
+        form.on('checkbox(from)', function(obj){
+            $('.from').attr('checked',false);
+            $(obj.elem).click();
+            from = obj.value;
+
+            getMusicCategory();
+            form.render('checkbox');
+        });
+
+        //根据来源获取类型
+        function getMusicCategory( id ){
+            $.post('/music/getCategory',{
+                from : id
+            },function( data ){
+
+            })
+        }
+
+        //提交表单
+        form.on('submit(capture)', function(data){
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>
+{/block}

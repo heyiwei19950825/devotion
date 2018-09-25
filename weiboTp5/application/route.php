@@ -12,10 +12,22 @@
 return [
     '__pattern__' => [
         'name' => '\w+',
+        'id'    => '\d+',
     ],
-    '[hello]'     => [
-        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['index/hello', ['method' => 'post']],
+    //子域名 路由模块
+    '__domain__' => [
+        'admin'     => 'admin',
+        'tp'        => 'home',
+        'api'       => 'api'
     ],
 
+
+    'user/index'      => 'home/user/index',
+    'user/create'     => 'home/user/create',
+    'user/add'        => 'home/user/add',
+    'user/add_list'   => 'home/user/addList',
+    'user/update/:id' => 'home/user/update',
+    'user/delete/:id' => 'home/user/delete',
+    'user/:id'        => 'home/user/read',
 ];
+
